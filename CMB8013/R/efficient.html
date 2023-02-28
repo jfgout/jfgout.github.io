@@ -384,7 +384,7 @@ example:</p>
 <pre class="r"><code>runif</code></pre>
 <pre><code>## function (n, min = 0, max = 1) 
 ## .Call(C_runif, n, min, max)
-## &lt;bytecode: 0x0000025b62a406e0&gt;
+## &lt;bytecode: 0x000001f1b977ee90&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <p>All what this function does is to call the C version of the runif
 function…</p>
@@ -411,9 +411,9 @@ myMean &lt;- function(v){
 library(&quot;microbenchmark&quot;)
 microbenchmark(myMean(v), mean(v))</code></pre>
 <pre><code>## Unit: microseconds
-##       expr   min    lq    mean median    uq     max neval
-##  myMean(v) 286.8 288.2 480.958 294.05 357.9 15843.8   100
-##    mean(v)  21.8  22.0  26.867  22.50  25.7   157.5   100</code></pre>
+##       expr   min     lq    mean median     uq     max neval
+##  myMean(v) 286.9 289.75 614.739  322.3 565.15 16834.3   100
+##    mean(v)  21.7  22.00  28.604   22.5  24.10   209.9   100</code></pre>
 <p>As you can see, using the <strong>mean</strong> function provided by
 R is several orders of magnitudes faster than using the for loop. That
 is because, at every iteration, the for loop calls the
@@ -466,25 +466,25 @@ myCor_superEfficient &lt;- function(x,y){
 
 # Making sure that all 3 versions give the correct answer:
 cor(v1, v2)</code></pre>
-<pre><code>## [1] -0.06226737</code></pre>
+<pre><code>## [1] -0.006671382</code></pre>
 <pre class="r"><code>myCor_efficient(v1, v2)</code></pre>
-<pre><code>## [1] -0.06226737</code></pre>
+<pre><code>## [1] -0.006671382</code></pre>
 <pre class="r"><code>myCor_superEfficient(v1, v2)</code></pre>
-<pre><code>## [1] -0.06226737</code></pre>
+<pre><code>## [1] -0.006671382</code></pre>
 <pre class="r"><code>myCor_notEfficient(v1, v2)</code></pre>
-<pre><code>## [1] -0.06226737</code></pre>
+<pre><code>## [1] -0.006671382</code></pre>
 <pre class="r"><code>microbenchmark(myCor_notEfficient(v1, v2), myCor_efficient(v1, v2), myCor_superEfficient(v1, v2), cor(v1,v2))</code></pre>
 <pre><code>## Unit: microseconds
-##                          expr     min       lq      mean   median      uq
-##    myCor_notEfficient(v1, v2) 26435.1 27544.30 28573.715 28498.75 29515.2
-##       myCor_efficient(v1, v2)    46.2    49.55   137.941    52.55    59.8
-##  myCor_superEfficient(v1, v2)    34.1    37.30   130.986    42.75    49.0
-##                   cor(v1, v2)    22.9    28.05    49.605    48.50    64.6
+##                          expr     min       lq      mean   median       uq
+##    myCor_notEfficient(v1, v2) 27544.3 29892.25 33752.313 31072.20 36302.55
+##       myCor_efficient(v1, v2)    48.0    54.70   169.832    62.00    84.05
+##  myCor_superEfficient(v1, v2)    35.8    41.25   145.123    46.95    70.50
+##                   cor(v1, v2)    25.3    32.05    61.819    63.05    70.50
 ##      max neval
-##  33503.6   100
-##   8237.6   100
-##   8485.3   100
-##    150.4   100</code></pre>
+##  63803.1   100
+##   9421.3   100
+##   8779.6   100
+##    197.8   100</code></pre>
 <p>Note that even the notation used to access elements in a data frame
 can influence the speed at which the operation is performed. In other
 words: <strong>t$column[row]</strong> is not relying on the exact same
@@ -497,11 +497,11 @@ t &lt;- data.frame(
 )
 
 microbenchmark(t[8000,&quot;c2&quot;], t[8000,2], t$c2[8000])</code></pre>
-<pre><code>## Unit: nanoseconds
-##           expr  min   lq  mean median   uq   max neval
-##  t[8000, &quot;c2&quot;] 8400 8700 10211   8800 8900 55600   100
-##     t[8000, 2] 8500 8600  9312   8700 8900 28400   100
-##     t$c2[8000]  600  750  1445    900  950 23000   100</code></pre>
+<pre><code>## Unit: microseconds
+##           expr  min    lq   mean median    uq   max neval
+##  t[8000, &quot;c2&quot;] 16.9 19.50 24.787   20.5 21.00 263.3   100
+##     t[8000, 2] 17.1 19.65 34.113   20.5 21.45 830.9   100
+##     t$c2[8000]  1.3  1.60  2.110    2.0  2.20   5.7   100</code></pre>
 </div>
 <div id="using-the-apply-functions" class="section level2">
 <h2>2. Using the apply functions</h2>
@@ -518,16 +518,16 @@ t &lt;- data.frame(
 
 t</code></pre>
 <pre><code>##           c1        c2        c3
-## 1   8.072381  6.663957 10.864529
-## 2  13.967424 10.431089  9.288841
-## 3   9.918561 10.734134 12.803661
-## 4   9.505638 10.250009 11.746633
-## 5  10.966216  6.786890 12.581908
-## 6   9.779038  7.346550  8.981951
-## 7   7.381490 10.959303 11.748248
-## 8   7.893947 13.042188 13.891582
-## 9  11.686586  8.448943 12.514292
-## 10 11.656408 10.426978  7.400220</code></pre>
+## 1  10.718634 10.185278 10.123133
+## 2  13.152707  8.980474  8.858445
+## 3  10.874582  7.594101  9.871553
+## 4   9.798828 11.890276 10.645497
+## 5   9.001496  9.336788 13.466145
+## 6   8.895084 12.432758  7.250345
+## 7  12.218979 10.401939 11.310439
+## 8   7.568366 15.089725  8.474312
+## 9  10.442795  8.752577 11.831971
+## 10  8.192511 10.087636 11.824321</code></pre>
 <p>To compute the average of these three columns on a row by row basis,
 you cannot simply write:</p>
 <pre class="r"><code>t$avg &lt;- mean(t$c1, t$c2, t$c3)</code></pre>
@@ -566,9 +566,9 @@ t &lt;- data.frame(
 cNames &lt;- c(&quot;c1&quot;, &quot;c2&quot;, &quot;c3&quot;)
 microbenchmark(myAvg_v1(t, cNames), myAvg_v2(t, cNames))</code></pre>
 <pre><code>## Unit: milliseconds
-##                 expr     min      lq     mean   median       uq     max neval
-##  myAvg_v1(t, cNames) 34.1980 36.3863 38.71948 37.14600 38.70105 68.0523   100
-##  myAvg_v2(t, cNames)  6.3743  6.8041  7.33348  7.04825  7.56405 10.8891   100</code></pre>
+##                 expr     min       lq     mean  median       uq     max neval
+##  myAvg_v1(t, cNames) 37.8853 39.54680 44.60947 42.9156 47.72330 71.7375   100
+##  myAvg_v2(t, cNames)  6.4818  7.28025  8.81870  7.8488  9.18015 41.3966   100</code></pre>
 <p>Note that we could have applied a little trick to make our function a
 lot more efficient, without having to use <strong>apply</strong>:</p>
 <pre class="r"><code>myAvg_v3 &lt;- function(t, cNames){
@@ -584,10 +584,10 @@ lot more efficient, without having to use <strong>apply</strong>:</p>
 cNames &lt;- c(&quot;c1&quot;, &quot;c2&quot;, &quot;c3&quot;)
 microbenchmark(myAvg_v1(t, cNames), myAvg_v2(t, cNames), myAvg_v3(t, cNames))</code></pre>
 <pre><code>## Unit: microseconds
-##                 expr     min      lq      mean   median       uq     max neval
-##  myAvg_v1(t, cNames) 34123.3 35887.3 37134.942 36650.05 37595.35 46292.5   100
-##  myAvg_v2(t, cNames)  6486.4  6798.5  7518.811  7098.35  7698.80 14116.3   100
-##  myAvg_v3(t, cNames)    27.7    40.4    94.525    45.00    56.25  4706.9   100</code></pre>
+##                 expr     min       lq      mean   median      uq      max neval
+##  myAvg_v1(t, cNames) 36669.3 39529.20 50382.827 41882.90 49818.1 152301.9   100
+##  myAvg_v2(t, cNames)  6286.5  7239.95  9455.131  8089.45  9688.2  27057.8   100
+##  myAvg_v3(t, cNames)    28.3    44.55   115.044    49.75    71.4   4877.2   100</code></pre>
 <p>Other functions of the same family include <strong>lapply</strong>
 (to perform an action on a list or vector).</p>
 </div>
@@ -636,9 +636,9 @@ N &lt;- 1000
 microbenchmark(fillVector_inefficient(N), fillVector_efficient(N), seq(from=1, to=N, by=1))</code></pre>
 <pre><code>## Unit: microseconds
 ##                           expr    min      lq     mean  median      uq     max
-##      fillVector_inefficient(N) 1322.5 1630.70 2119.847 1800.10 1961.30 12147.7
-##        fillVector_efficient(N)   38.4   40.20   78.040   41.15   43.95  3176.1
-##  seq(from = 1, to = N, by = 1)   20.7   23.45   45.742   30.30   45.00   868.6
+##      fillVector_inefficient(N) 1188.0 2026.45 3102.432 2494.35 3115.50 21289.0
+##        fillVector_efficient(N)   40.4   42.55   99.931   47.15   71.60  3184.2
+##  seq(from = 1, to = N, by = 1)   22.0   28.35   82.238   59.80  111.45   601.0
 ##  neval
 ##    100
 ##    100
@@ -680,14 +680,14 @@ myWrite_RDS &lt;- function(t){
 
 microbenchmark(myWrite_base(t), myWrite_RDS(t), times = 5)</code></pre>
 <pre><code>## Unit: milliseconds
-##             expr      min       lq      mean   median       uq      max neval
-##  myWrite_base(t) 103.1532 103.8257 105.90734 105.9561 107.9605 108.6412     5
-##   myWrite_RDS(t)  14.4351  14.4895  14.69324  14.6408  14.9095  14.9913     5</code></pre>
+##             expr     min      lq     mean  median      uq      max neval
+##  myWrite_base(t) 87.2148 87.6697 98.23888 89.3239 90.0691 136.9169     5
+##   myWrite_RDS(t) 14.5884 15.2595 16.75552 15.9562 17.1223  20.8512     5</code></pre>
 <pre class="r"><code># You will also notice that the binary file is a lot smaller:
 file.size(&quot;table-base.tab&quot;)/1e3</code></pre>
-<pre><code>## [1] 516.624</code></pre>
+<pre><code>## [1] 516.694</code></pre>
 <pre class="r"><code>file.size(&quot;table.rds&quot;)/1e3</code></pre>
-<pre><code>## [1] 224.57</code></pre>
+<pre><code>## [1] 224.436</code></pre>
 <pre class="r"><code># We can also compare the speed performance of read.table vs readRDS to read data from a file:
 myRead_base &lt;- function(fName){
   t &lt;- read.table(file = fName)
@@ -702,8 +702,8 @@ myRead_RDS &lt;- function(fName){
 microbenchmark(myRead_base(&quot;table-base.tab&quot;), myRead_RDS(&quot;table.rds&quot;), times = 5)</code></pre>
 <pre><code>## Unit: milliseconds
 ##                           expr     min      lq     mean  median      uq     max
-##  myRead_base(&quot;table-base.tab&quot;) 10.1909 10.3394 11.64912 11.2132 12.6138 13.8883
-##        myRead_RDS(&quot;table.rds&quot;)  1.5299  1.6860  1.97572  1.7288  1.7292  3.2047
+##  myRead_base(&quot;table-base.tab&quot;) 11.1124 12.1749 13.82092 12.7837 16.3505 16.6831
+##        myRead_RDS(&quot;table.rds&quot;)  1.6245  2.0365  2.27078  2.0643  2.2165  3.4121
 ##  neval
 ##      5
 ##      5</code></pre>
@@ -722,6 +722,103 @@ useful:</p>
 export(t, &quot;test.xlsx&quot;)</code></pre>
 <p>You can now open the “test.xlsx” with Excel (or LibreOffice, …)</p>
 </div>
+<div id="efficient-data-structures" class="section level2">
+<h2>5. Efficient data structures</h2>
+<p><br> Up to this point, we have relied mostly on
+<strong>data.frame</strong> object to store 2-dimensional arrays in
+memory. While this is perfectly fine, there are alternatives that offer
+some nice advantages.</p>
+<p>In this section, we will mainly take advantage of
+<strong>tibbles</strong>, which can be seen as improved data.frames.</p>
+<p>Run the following code, and observe the differences in output when
+you display the object (data.frame or tibble) in the R console.</p>
+<pre class="r"><code>t &lt;- read.csv(&quot;data/2020-12-weather.csv&quot;)
+t
+
+library(tibble)
+library(tidyverse)
+tb &lt;- read_csv(&quot;data/2020-12-weather.csv&quot;, comment = &quot;#&quot;)
+tb
+
+# Note that, you can also transform data.frames into tibbles:
+tb2 &lt;- tibble(t)
+tb2</code></pre>
+<p><br> Data manipulation is also a lot easier with
+<strong>tibbles</strong> compared to <strong>data.frames</strong>
+<br></p>
+<pre class="r"><code># Efficient renaming of columns:
+tb &lt;- rename(tb, tavg = &quot;temperature_avg&quot;)
+
+# Easy selection of rows that fit a given condition:
+filter(tb, tavg &gt; 5)
+
+# Note that this last command does not modify the tb object. 
+# If you want to save the result in a variable, you would have to do something like this:
+
+hotDays &lt;- filter(tb, tavg &gt; 5)</code></pre>
+<p><br> One application where <strong>tibbles</strong> are extremely
+useful is when you need to make wide tables long. For example, the
+following table with temperatures from two weather stations is in a
+<strong>wide</strong> format (= one column per station)</p>
+<pre><code>## # A tibble: 4 × 2
+##   starkville columbus
+##        &lt;dbl&gt;    &lt;dbl&gt;
+## 1         12       13
+## 2         10       11
+## 3         15       14
+## 4         16       17</code></pre>
+<p><br> If you want to plot this data with ggplot, using a different
+color/shape per station, you need the table to be in this
+<strong>long</strong> format:</p>
+<pre><code>## # A tibble: 8 × 2
+##   station    temperature
+##   &lt;chr&gt;            &lt;dbl&gt;
+## 1 starkville          12
+## 2 columbus            13
+## 3 starkville          10
+## 4 columbus            11
+## 5 starkville          15
+## 6 columbus            14
+## 7 starkville          16
+## 8 columbus            17</code></pre>
+<p><br> Performing this operation would be cumbersome and painful using
+only base R functions. With <strong>tibbles</strong>, it is as easy as
+this one line of code:</p>
+<pre class="r"><code>tblg &lt;- pivot_longer(tbl, all_of(colnames(tbl)), names_to = &quot;station&quot;, values_to = &quot;temperature&quot;)</code></pre>
+</div>
+<div id="chaining-operations-with-the-pipe-operator" class="section level2">
+<h2>6. Chaining operations with the Pipe operator</h2>
+<p>The <strong>pipe operator</strong> in R is written with this symbol:
+<strong>%&gt;%</strong><br />
+It passes the result of a command to the next command. For example:</p>
+<pre class="r"><code>tbl$temperature %&gt;% mean(na.rm = T)</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: `temperature`.</code></pre>
+<pre><code>## Warning in mean.default(., na.rm = T): argument is not numeric or logical:
+## returning NA</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code># This provides the content of tbl$temperature to the first argument of the function mean</code></pre>
+<p>A more useful example… Let’s select from the tibble
+<strong>tb</strong> all the rows for which the average temperature was
+greater or equal to 5 but also less or equal to 6 and the maximum
+temperature was greater than 10. The elegant solution with the pipe
+operator is:</p>
+<pre class="r"><code>library(tidyverse)
+
+tb &lt;- read_csv(&quot;data/2020-12-weather.csv&quot;, comment = &quot;#&quot;)
+
+filter(tb, temperature_avg &gt;= 5) %&gt;% 
+  filter(temperature_avg &lt;= 6) %&gt;%
+  filter(temperature_max &gt; 10)</code></pre>
+<pre><code>## # A tibble: 3 × 9
+##   Date       temperatu…¹ tempe…² tempe…³ humid…⁴ humid…⁵ humid…⁶ wind_…⁷ wind_…⁸
+##   &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 12/5/2020         17.1     5.9    -1.3    0.92    0.75    0.3      6.5     0.2
+## 2 12/15/2020        10.8     5.1    -1.5    0.9     0.74    0.51     7.9     0.3
+## 3 12/19/2020        14.1     5.9    -2.4    0.91    0.74    0.37    14       0.7
+## # … with abbreviated variable names ¹​temperature_max, ²​temperature_avg,
+## #   ³​temperature_low, ⁴​humidity_high, ⁵​humidity_avg, ⁶​humidity_low, ⁷​wind_max,
+## #   ⁸​wind_avg</code></pre>
+</div>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
 <p>There are many ways to obtain the same result in R. After completing
@@ -732,6 +829,7 @@ optimization tricks presented in this lab. You can also use the package
 <strong>profvis</strong> to easily find (and visualize) which parts of
 your code are taking the most time (and therefore need to be optimized,
 or removed!)</p>
+<p><br></p>
 </div>
 </div>
 

@@ -372,12 +372,12 @@ sequences.</p></li>
 <div id="a-simple-orf-hunting-function" class="section level2">
 <h2>A simple ORF hunting function</h2>
 <p><br> For this part, we’ll use a small DNA sequence which you can
-download from this file: <a href="./sequence.fa">sequence.fa</a></p>
+download from this file: <a href="./data/sequence_ORF.fa">sequence_ORF.fa</a></p>
 <p><br> We’ll use the package <strong>Biostrings</strong> to easily
 import the DNA sequence:</p>
 <pre class="r"><code>library(Biostrings)
 
-genome &lt;- readDNAStringSet(&quot;sequence.fa&quot;)
+genome &lt;- readDNAStringSet(&quot;data/sequence_ORF.fa&quot;)
 
 genome</code></pre>
 <pre><code>## DNAStringSet object of length 1:

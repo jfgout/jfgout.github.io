@@ -593,6 +593,25 @@ myVector
 myVector &lt;- myFunction(myVector)
 myVector</code></pre>
 </div>
+</div>
+<div id="re-suing-code-and-knowing-your-location-in-the-computer." class="section level2">
+<h2>Re-suing code and knowing your location in the computer.</h2>
+<p>If you need to use a function in different programs, the best
+solution is to write the code for this function in a dedicated file and
+“load” this file in any script that will make use of it. To understand
+this concept, let’s start by “erasing R’s memory” with the following
+command:</p>
+<pre class="r"><code>rm(list=ls())</code></pre>
+<p>Now, the code that you just wrote for the function “myFunction” is
+not in memory anymore. To use it, you would need to reload it, which you
+can do with the following line of code (if you have saved the code of
+this function in a file named “myFunction.R”):</p>
+<pre class="r"><code>source(&quot;myFunction.R&quot;)</code></pre>
+<p>Note that this will work only if the file “myFunction.R” is in the
+current working directory. You can find the current working directory
+with:</p>
+<pre class="r"><code>getwd()</code></pre>
+<pre><code>## [1] &quot;C:/lab/MSSTATE/Class/CAPSTONE/2024/Rmd_files&quot;</code></pre>
 <div id="conditional-tests." class="section level3">
 <h3>Conditional tests.</h3>
 <p>In programming, a conditional (or conditional statement/expression)
@@ -705,6 +724,21 @@ myVector &lt;- c(10, 20, 30)
 myMean(v)
 
 # You can check </code></pre>
+</div>
+<div id="a-slightly-more-complex-exercise-computing-the-median." class="section level2">
+<h2>A slightly more complex exercise: computing the median.</h2>
+<p>In this second exercise, you will write a function to compute the
+median value of a vector of values. Once again, the solution exists in
+R, but the goal is for you to write your own algorithm.<br />
+We will do this exercise in class and I will walk you through the
+steps.</p>
+<p>The end result should be something like this:</p>
+<pre class="r"><code>myMedian &lt;- function(v){
+  # Here goes the code to compute the median
+}
+
+testVector &lt;- c(3,6,8,12)
+myMedian(testVector)</code></pre>
 </div>
 <div id="first-application-to-genomics." class="section level2">
 <h2>First application to genomics.</h2>

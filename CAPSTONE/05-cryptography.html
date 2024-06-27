@@ -412,6 +412,31 @@ cat(&quot;The encrypted version of &quot;, word, &quot; with offset of &quot;, m
 cat(&quot;Decrypted: &quot;, decryptedWord, &quot;\n&quot;)</code></pre>
 <pre><code>## Decrypted:  hello</code></pre>
 </div>
+<div id="help" class="section level2">
+<h2>HELP:</h2>
+<p>Once you have a “myEncrypt” function that works, you can copy/paste
+the code of this function and change the name in the new copy from
+“myEncrypt” to “myDecrypt”. The structure of the decrypting is very
+similar to the encrypting, all you have to do is substract the offset
+(instead of adding the offset).</p>
+<p>The only other difference is how to handle special cases (when the
+newPosition is beyond the limit of the alphabet, which would be negative
+values here). To allow you to focus on the final part of the assignment,
+I am giving you the code necessary to handle these special cases. All
+you have to do is replace this part of the code:</p>
+<pre class="r"><code>  if( newPosition &gt; ALPHABET_SIZE){
+      newPosition &lt;- (newPosition %% ALPHABET_SIZE)
+    }</code></pre>
+<p>With this:</p>
+<pre class="r"><code>    if( newPosition == 0 ){
+      newPosition &lt;- 26
+    }
+    if( newPosition &lt; 0 ){
+      newPosition &lt;- newPosition %% 26
+    }
+    encryptedWord[i] &lt;- letters[newPosition]
+  }</code></pre>
+</div>
 <div id="automatic-decrypting" class="section level2">
 <h2>Automatic decrypting:</h2>
 <p>For this, we will use a package called ‘dictionary’ which will
@@ -444,6 +469,17 @@ autoDecrypt(&quot;cpy&quot;)</code></pre>
 <pre><code>## Possible solution:  cpy  -&gt;  box  (with offset:  1 )
 ## Possible solution:  cpy  -&gt;  era  (with offset:  24 )</code></pre>
 </div>
+</div>
+<div id="help-1" class="section level2">
+<h2>HELP:</h2>
+<p>The general structure of your function autoDecrypt should be
+something like this:</p>
+<pre class="r"><code>autoDecrypt &lt;- function(word){
+  
+  # For each possible value of offset (offset value can be anything between 1 and 26), decrypt the word with this value of offset and test if the decrypted result is a word in the English dictionary (using the code I gave you above).
+  # If the word exists in the dictionary, display a message like the one in the example above.
+  
+}</code></pre>
 </div>
 <div id="final-exercise" class="section level2">
 <h2>Final exercise:</h2>

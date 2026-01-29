@@ -423,7 +423,7 @@ return -1.</li>
 <pre class="r"><code>findORFsize(startPos = 1, seq = genome[[1]])</code></pre>
 <pre><code>## [1] -1</code></pre>
 <pre class="r"><code>findORFsize(startPos = 2, seq = genome[[1]])</code></pre>
-<pre><code>## [1] 67</code></pre>
+<pre><code>## [1] 66</code></pre>
 <p><br> The second step consists in writing a function that searches for
 all possible ORFs in a sequence. To optimize things a bit, we will start
 by searching all the possible start codons with:</p>
@@ -465,8 +465,8 @@ ORFs &lt;- myFindORFs(seq = genome[[1]])</code></pre>
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
 ## 1   227    -1 +          NA
 ## 2   314    -1 +          NA
-## 3   315    13 -         302
-## 4   246    13 -         233</code></pre>
+## 3   315    19 -         296
+## 4   246    88 -         158</code></pre>
 <p><br></p>
 <p>Extract the DNA sequence corresponding to the ORF and translate it
 into protein with the <strong>translate</strong> function. Then, use the

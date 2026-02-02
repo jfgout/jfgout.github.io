@@ -429,7 +429,7 @@ all possible ORFs in a sequence. To optimize things a bit, we will start
 by searching all the possible start codons with:</p>
 <pre class="r"><code>library(GenomicRanges)
 
-startCodons &lt;- matches &lt;- matchPattern(&quot;ATG&quot;, genome[[1]])
+startCodons &lt;- matchPattern(&quot;ATG&quot;, genome[[1]])
 
 startCodons</code></pre>
 <pre><code>## Views on a 321-letter DNAString subject
@@ -467,6 +467,44 @@ ORFs &lt;- myFindORFs(seq = genome[[1]])</code></pre>
 ## 2   314    -1 +          NA
 ## 3   315    19 -         296
 ## 4   246    88 -         158</code></pre>
+<p>Here is the general structure that I suggest you follow:</p>
+<pre class="r"><code>findORFsize &lt;- function(startPos, seq, stopCodons = c(&quot;TGA&quot;, &quot;TAA&quot;, &quot;TAG&quot;)){
+  # Here goes the code of the function that finds the size of a given ORF.
+  # Returns -1 if it reaches the end of the sequence before it finds a stop codon.
+}
+
+myFindORFs &lt;- function(seq, stopCodons = c(&quot;TGA&quot;, &quot;TAA&quot;, &quot;TAG&quot;)){
+  startCodons &lt;- matchPattern(&quot;ATG&quot;, seq)
+  ORFs_plus &lt;- tibble(
+    start = start(startCodons),
+    end = rep(-1, length(startCodons))
+    size = rep(-1, length(startCodons))
+  )
+  print(nrow(ORFs_plus))
+  
+  # Here: code a for loop that will fill the table &quot;ORFs_plus&quot; with the coordinates + size of each ORF
+  # For example, if you have the size of the ith ORF stored in a variable named &quot;size&quot; and its end position in a variable named &quot;end&quot;, you can use:
+  ORFs_plus$end[i] &lt;- end
+  ORFs_plus$size[i] &lt;- size
+  
+
+  # Compute the reverse-complement sequence
+  seq_rc &lt;- reverseComplement(seq)
+
+  # Perform the same type of loop on the reverse complemented sequence
+  
+  # Convert the coordinates back to the plus strand
+
+  ORFs_plus$strand &lt;- &quot;+&quot;
+  ORFs_minus$strand &lt;- &quot;-&quot;
+  # Combine both plus and minus strand ORFs into one table
+  ORFs &lt;- rbind(ORFs_plus, ORFs_minus)
+  
+  ORFs$length &lt;- abs(ORFs$start-ORFs$end)
+  ORFs$length[which(ORFs$end==(-1))] &lt;- NA
+  
+  ORFs
+}</code></pre>
 <p><br></p>
 <p>Extract the DNA sequence corresponding to the ORF and translate it
 into protein with the <strong>translate</strong> function. Then, use the

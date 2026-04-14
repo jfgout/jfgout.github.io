@@ -507,6 +507,64 @@ differentially just by chance (-&gt; null hypothesis)</li>
 <li>Is the difference from the null hypothesis significant?</li>
 <li>Statistical vs biological significance…</li>
 </ul>
+<pre class="r"><code># General structure of the program:
+
+################################################################################
+# testGO_enrichment; This function will test if a given Gene Ontology has a 
+# significant excess of differentially expressed genes.
+#
+# Input:
+#   - siGenes: A vector with the IDs of all the differentially expressed genes.
+#   - allGenes: A vector with the IDs of all the genes in yeast
+#   - genesInGo: A vector with the IDs of all the genes that belong to the GO category being tested
+# 
+testGO_enrichment &lt;- function(sigGenes, allGenes, genesInGo){
+  # We will perform a proportion test (prop.test) to compare the fraction of genes that 
+  # are differentially expressed between the tested functional category and the entire genome.
+  
+  # Return: the result from the prop.test function call.
+}
+
+# To call the function, we will need to perform a number of steps:
+
+# 1. Let&#39;s load our DE analysis results:
+
+setwd(&quot;/path_to-work_folder&quot;)
+
+library(clusterProfiler)
+library(org.Sc.sgd.db)
+library(apeglm)
+
+res &lt;- readRDS(&quot;res_df_oxy-noAgent.bin&quot;)  # Loading previously saved DE results
+res_df &lt;- as.data.frame(res)      # Turning our res object into a data.frame
+res_df$gene &lt;- rownames(res_df)   # Adding a column with the gene ID
+
+GO_ID &lt;- &quot;GO:0005975&quot; # carbohydrate metabolic process
+
+# Querying the online GO database to get the list of genes annotated in the selected GO category.
+all_genes_in_term &lt;- AnnotationDbi::select(
+  org.Sc.sgd.db,
+  keys     = GO_ID,
+  keytype  = &quot;GOALL&quot;,
+  columns  = c(&quot;ORF&quot;, &quot;COMMON&quot;, &quot;GOALL&quot;, &quot;ONTOLOGYALL&quot;)
+)
+
+# Having a quick look at the data:
+head(all_genes_in_term)
+
+all_genes_in_term &lt;- # Find the code to get the list of gene IDs (we want the IDs that start with &quot;Y&quot;)
+  # There is one tricky part here: some genes can appear multiple times in the list.
+  # Make sure to remove any redudancy.
+
+
+MAX_PADJ &lt;- 0.05
+MIN_LFC &lt;- 1
+
+sigGenes &lt;- # Find the code to get the list of genes that are significantly differentially expressed.  
+allGenes &lt;- # Find the code that generates a vecotr with all the genes analyzed in this study.
+
+    
+testGO_enrichment(sigGenes = sigGenes, allGenes = allGenes, genesInGo = ? which variable do you use here ?)</code></pre>
 </div>
 </div>
 

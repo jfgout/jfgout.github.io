@@ -393,6 +393,16 @@ protein = dna.translate()
 print(&quot;\nProtein sequence:&quot;)
 print(protein)</code></pre>
 <p>You can use this test fasta file to test the program: <a href="./data/mini-fasta-for-Python-01.fasta">mini-fasta-for-Python-01.fasta</a>.</p>
+<p>To run this code on Lugh, save it in a “myCode.py” file, and then,
+perform the following steps:</p>
+<pre class="bash"><code>
+source /mnt/home/software/sources/Miniforge/install/etc/profile.d/conda.sh
+
+conda activate /mnt/home/software/conda-envs/biopython/
+
+# Then, you can run your python code with:
+# python myCode.py [arguments]
+</code></pre>
 <p>Without using Biopython, we would have to define our own functions to
 read Fasta files and perform all these operations (compute GC content,
 translate sequence). Here is what the code would look like:</p>
